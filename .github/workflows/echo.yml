@@ -1,7 +1,8 @@
 name: Test self-hosted runner
 
 
-on: workflow-dispatch
+on: 
+  push:
 
 jobs:
   echo:
