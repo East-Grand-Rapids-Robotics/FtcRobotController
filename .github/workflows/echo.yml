@@ -10,4 +10,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: echo
-        run: echo "hello world!"
+        run: which adb
+      - name: connect
+        run: adb connect 192.168.43.1
+      - uses: actions/download-artifact@v3
+        

@@ -34,6 +34,7 @@ class Autonomous : OpMode() {
                 detection.ftcPose.yaw
             )
         }
+        
     }
 }
 

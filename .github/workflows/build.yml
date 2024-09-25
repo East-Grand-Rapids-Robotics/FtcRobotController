@@ -8,7 +8,7 @@ jobs:
   android_build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
@@ -18,7 +18,16 @@ jobs:
       - run: ./gradlew assembleRelease
       - id: apk
         run: echo "apkpath=$(find TeamCode/build/outputs/apk/release/*.apk)" >> $GITHUB_OUTPUT
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: release-artifacts
           path: ${{ steps.apk.outputs.apkpath }}
+  adb:
+    runs-on: self-hosted
+    needs: android_build
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: release-artifacts
+      - run: wpa_cli -i wlan0 select_network $(wpa_cli -i wlan0 list_networks | grep example_name | cut -f 1)
+      - run: 
