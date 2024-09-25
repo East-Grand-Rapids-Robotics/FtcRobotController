@@ -1,7 +1,7 @@
 name: Build
 
 
-on: 
+on:
   push:
 
 jobs:
@@ -19,6 +19,6 @@ jobs:
       - id: apk
         run: echo "apkpath=$(find TeamCode/build/outputs/apk/release/*.apk)" >> $GITHUB_OUPUT
       - uses: actions/upload-artifact@v3
-        with: 
+        with:
           name: release-artifacts
           path: ${{ steps.apk.outputs.apkpath }}
