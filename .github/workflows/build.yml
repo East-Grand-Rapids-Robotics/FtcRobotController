@@ -30,4 +30,4 @@ jobs:
         with:
           name: release-artifacts
       - run: wpa_cli -i wlan0 select_network $(wpa_cli -i wlan0 list_networks | grep example_name | cut -f 1)
-      - run: 
+      - run: echo "hi there!"
