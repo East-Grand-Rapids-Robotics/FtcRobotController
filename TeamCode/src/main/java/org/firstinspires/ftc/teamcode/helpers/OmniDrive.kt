@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.DcMotor.RunMode.STOP_AND_RESET_ENCODER
 import com.qualcomm.robotcore.hardware.DcMotorSimple.Direction.FORWARD
 import com.qualcomm.robotcore.hardware.DcMotorSimple.Direction.REVERSE
+import org.firstinspires.ftc.robotcore.external.Telemetry
 
 
 typealias LeftFrontMotor = DcMotor
@@ -32,6 +33,8 @@ class OmniDrive(
             drivePower(field)
         }
 
+    var telemetry: Telemetry? = null
+
     fun stop() {
         motionVector = MotionVector(0f, 0f, 0f)
     }
@@ -44,6 +47,11 @@ class OmniDrive(
     }
 
     private fun drivePower(motionVector: MotionVector) {
+        telemetry?.addData("OmniDrive left front: ", motionVector.leftFrontPower())
+        telemetry?.addData("OmniDrive right front: ", motionVector.rightFrontPower())
+        telemetry?.addData("OmniDrive left back: ", motionVector.leftBackPower())
+        telemetry?.addData("OmniDrive right back: ", motionVector.rightBackPower())
+
         leftFrontMotor.power = motionVector.leftFrontPower()
         rightFrontMotor.power = motionVector.rightFrontPower()
         leftBackMotor.power = motionVector.leftBackPower()
