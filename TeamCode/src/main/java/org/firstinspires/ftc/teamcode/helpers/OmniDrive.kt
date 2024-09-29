@@ -1,16 +1,17 @@
 package org.firstinspires.ftc.teamcode.helpers
 
-import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.DcMotor.RunMode.STOP_AND_RESET_ENCODER
+import com.qualcomm.robotcore.hardware.DcMotorEx
 import com.qualcomm.robotcore.hardware.DcMotorSimple.Direction.FORWARD
 import com.qualcomm.robotcore.hardware.DcMotorSimple.Direction.REVERSE
 import org.firstinspires.ftc.robotcore.external.Telemetry
+import org.firstinspires.ftc.teamcode.kinematics.VelocityVector
 
 
-typealias LeftFrontMotor = DcMotor
-typealias RightFrontMotor = DcMotor
-typealias LeftBackMotor = DcMotor
-typealias RightBackMotor = DcMotor
+typealias LeftFrontMotor = DcMotorEx
+typealias RightFrontMotor = DcMotorEx
+typealias LeftBackMotor = DcMotorEx
+typealias RightBackMotor = DcMotorEx
 
 typealias MotorPower = Double
 
@@ -19,6 +20,7 @@ class OmniDrive(
     val rightFrontMotor: RightFrontMotor,
     val leftBackMotor: LeftBackMotor,
     val rightBackMotor: RightBackMotor,
+    val telemetry: Telemetry? = null
 ) {
     init {
         leftFrontMotor.direction = REVERSE
@@ -27,16 +29,14 @@ class OmniDrive(
         rightBackMotor.direction = FORWARD
     }
 
-    var motionVector = MotionVector(0f, 0f, 0f)
+    var powerVector = PowerVector(0.0, 0.0, 0.0)
         set(value) {
             field = value
             drivePower(field)
         }
 
-    var telemetry: Telemetry? = null
-
     fun stop() {
-        motionVector = MotionVector(0f, 0f, 0f)
+        powerVector = PowerVector(0.0, 0.0, 0.0)
     }
 
     fun zeroEncoders() {
@@ -46,7 +46,7 @@ class OmniDrive(
         leftBackMotor.mode = STOP_AND_RESET_ENCODER
     }
 
-    private fun drivePower(motionVector: MotionVector) {
+    private fun drivePower(motionVector: PowerVector) {
         telemetry?.addData("OmniDrive left front: ", motionVector.leftFrontPower())
         telemetry?.addData("OmniDrive right front: ", motionVector.rightFrontPower())
         telemetry?.addData("OmniDrive left back: ", motionVector.leftBackPower())
@@ -56,6 +56,11 @@ class OmniDrive(
         rightFrontMotor.power = motionVector.rightFrontPower()
         leftBackMotor.power = motionVector.leftBackPower()
         rightBackMotor.power = motionVector.rightBackPower()
+    }
+
+    private fun driveVelocity(vector: VelocityVector) {
+        leftFrontMotor.angularVelocity =
+        TODO("fill in axel velocity logic")
     }
 }
 

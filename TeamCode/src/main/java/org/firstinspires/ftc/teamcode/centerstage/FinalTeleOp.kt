@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.hardware.Servo
 import org.firstinspires.ftc.teamcode.helpers.getMotor
 import org.firstinspires.ftc.teamcode.helpers.getServo
 
-@TeleOp(name = "Final TeleOp")
+@TeleOp(name = "Roomba Final TeleOp")
 class FinalTeleOp : LinearOpMode() {
     val leftWheel by lazy { hardwareMap.getMotor("left_motor") }
     val rightWheel by lazy { hardwareMap.getMotor("right_motor") }
