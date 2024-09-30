@@ -17,14 +17,14 @@ class EgrTeleOp : OpMode() {
 
     override fun init() {
         omniDrive.zeroEncoders()
-
+        omniDrive.telemetry = this.telemetry
     }
 
     override fun loop() {
         omniDrive.powerVector = PowerVector(
-            -this.gamepad1.left_stick_y.toDouble(),
-            this.gamepad1.left_stick_x.toDouble(),
-            this.gamepad1.right_stick_x.toDouble()
+            axial = -this.gamepad1.left_stick_y.toDouble(),
+            lateral = this.gamepad1.left_stick_x.toDouble(),
+            yaw = this.gamepad1.right_stick_x.toDouble()
         )
     }
 }

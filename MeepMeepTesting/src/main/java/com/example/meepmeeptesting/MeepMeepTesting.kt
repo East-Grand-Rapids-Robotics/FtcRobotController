@@ -21,7 +21,9 @@ fun main(args: Array<String>) {
             .setDimensions(18.0,18.0)
             .setDriveTrainType(MECANUM)
             .setStartPose(Pose2d(Vector2d((0.0-70.0+9.0+24.0),(0.0-70.0+9.0)), Rotation2d(0.0,0.0)))
+            
             .build()
+
 
 
 
