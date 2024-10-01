@@ -43,9 +43,9 @@ value class LateralVelocity<T: Velocity<*,T>>(val value: T) : Arithmetic<T> by v
 @JvmInline
 value class YawVelocity(val value: AngularVelocity) : Arithmetic<AngularVelocity> by value, Scalable<AngularVelocity> by value
 
-//@JvmInline
-//value class AxialAcceleration(val value: Double) : Arithmetic<AxialAcceleration>,
-//    Scalable<AxialAcceleration>
+@JvmInline
+value class AxialAcceleration(val value: Double) : Arithmetic<AxialAcceleration>,
+    Scalable<AxialAcceleration>
 
 @JvmInline
 value class LateralAcceleration(val value: Double) : Arithmetic<LateralAcceleration>,
@@ -1021,11 +1021,25 @@ data class LinearAcceleration(val length: Length, val duration: Duration = 1.sec
 }
 
 interface Jerk<Unit : Measure, Subclass : Jerk<Unit, Subclass>> : Arithmetic<Subclass>, Scalable<Subclass> {
-    fun unitesPerSecondCubed(): Unit
+    fun unitsPerSecondCubed(): Unit
     operator fun times(other: Duration): Acceleration<Unit, *>
     operator fun div(other: Duration) : Snap<Unit, *>
 }
-interface Snap<Unit: Measure, Subclass: Snap<Unit, Subclass>>: Arithmetic<Subclass>, Scalable<Subclass>
+
+data class AngularJerk(val angle: Angle, val duration: Duration) : Jerk<Angle, AngularJerk>
+
+data class LinearJerk(val length: Length, val duration: Duration) : Jerk<Length, LinearJerk>
+
+abstract class Snap<Unit: Measure, Subclass: Snap<Unit, Subclass>>(val unit: Unit, val tesseract: Duration): Arithmetic<Subclass>, Scalable<Subclass> {
+    fun unitsPerSecondTesseracted(): Unit {
+        return unit * tesseract.inFractionalSeconds()
+    }
+    operator fun times(other: Duration): Jerk<Unit, *>
+}
+
+data class AngularSnap(val angle: Angle, val duration: Duration) : Snap<Angle, AngularSnap>
+
+data class LinearSnap(val angle: Angle, val duration: Duration) : Snap<Length, LinearSnap>
 
 fun Duration.inFractionalSeconds(): Double {
     return this.inWholeMilliseconds / 1_000.0
