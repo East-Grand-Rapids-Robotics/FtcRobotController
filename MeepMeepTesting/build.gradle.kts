@@ -1,6 +1,6 @@
 plugins {
     id("java-library")
-    id("org.jetbrains.kotlin.jvm")
+    id(id = "org.jetbrains.kotlin.jvm")
 }
 
 java {
@@ -9,9 +9,10 @@ java {
 }
 
 dependencies {
-    implementation("com.acmerobotics.roadrunner:MeepMeep:0.1.6")
-}
-
-repositories {
-    maven { url = uri("https://maven.brott.dev/") }
+    constraints{
+        implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:2.0.20")
+        implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:2.0.20")
+        implementation("org.jetbrains.kotlin:kotlin-stdlib-common:2.0.20")
+    }
+    implementation(libs.meepmeep)
 }

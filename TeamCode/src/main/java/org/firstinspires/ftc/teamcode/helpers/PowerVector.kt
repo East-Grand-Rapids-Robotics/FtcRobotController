@@ -1,9 +1,9 @@
 package org.firstinspires.ftc.teamcode.helpers
 
 data class PowerVector(
-    val axial: MotorPower,
-    val lateral: MotorPower,
-    val yaw: MotorPower,
+    val axial: Double,
+    val lateral: Double,
+    val yaw: Double,
 ) {
     init {
         require(axial <= 1f) { "Axial Power cannot exceed 1.0" }
@@ -14,8 +14,8 @@ data class PowerVector(
         require(yaw >= -1f) { "Yaw Power cannot be less than -1.0" }
     }
 
-    fun leftFrontPower(): MotorPower = (axial + lateral + yaw) / 3.0
-    fun rightFrontPower(): MotorPower = (axial - lateral - yaw) / 3.0
-    fun leftBackPower(): MotorPower = (axial - lateral + yaw) / 3.0
-    fun rightBackPower(): MotorPower = (axial + lateral - yaw) / 3.0
+    fun leftFrontPower() = (axial + lateral + yaw)
+    fun rightFrontPower() = (axial - lateral - yaw)
+    fun leftBackPower() = (axial - lateral + yaw)
+    fun rightBackPower() = (axial + lateral - yaw)
 }
